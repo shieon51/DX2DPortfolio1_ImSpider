@@ -209,7 +209,7 @@ void SpiderPlayer::Hang()
 	isSpiderPhysicsOn = true; //스파이더 물리 On
 	SetPendulumCondition(spiderSilk->GetFirstPlayerPos(), spiderSilk->GetAttachPos());
 	SavePrePontentialEnergy();
-	CheckLeftOrRightDir(); //초기에만 설정
+	//CheckLeftOrRightDir(); //초기에만 설정
 
 	SetVelocityX(0.0f); //임시코드
 	SetVelocityY(0.0f);//임시코드

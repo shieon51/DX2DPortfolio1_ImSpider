@@ -3,7 +3,7 @@
 class SpiderPhysics : public RigidbodyObject //매달린 경우의 물리 추가
 {
 private: 
-	const float MASS = 10.0f; //진자의 흔들림 정도 (질량에 해당)
+	const float MASS = 4200.0f; //진자의 흔들림 정도 (질량에 해당)
 
 public:
 	SpiderPhysics();
@@ -16,14 +16,14 @@ public:
 
 	//player에서 호출 
 	void SetPendulumCondition(Vector2 playerPos, Vector2 attachPos);
-	void CheckLeftOrRightDir();
+	//void CheckLeftOrRightDir();
 	void RemainVelocityAfterCut(); //줄 자른 직후, 적용된 velocity.y 포함하기(예외처리)
 	void SavePrePontentialEnergy() { prePotentialEnergy = potentialEnergy; } //퍼텐셜 상태 저장
 	void UpdateVelocityX(); //줄 길이가 변하면 현재 상태에 대한 velocity.x를 재정의 해야 함
 
 private:
-	Vector2 GetDirInLowestPoint(); //최저점에 대한 예외처리
-	Vector2 GetDirGeneralPoint(Vector2 curDir); //일반적인 위치
+	//Vector2 GetDirInLowestPoint(); //최저점에 대한 예외처리
+	//Vector2 GetDirGeneralPoint(Vector2 curDir); //일반적인 위치
 
 protected:
 	bool isSpiderPhysicsOn = false; //해당 물리 작용 키기
