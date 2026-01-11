@@ -11,6 +11,9 @@ public:
 
 	void Update() override;
 
+	// [추가] 상태가 시작될 때 1번 실행되는 함수 선언
+	virtual void Start() override;
+
 	void ResetJumpCount() { jumpCount = MAX_JUMP_COUNT; } //점프횟수 초기화. 바닥에 도달했을 시 호출
 	
 private:

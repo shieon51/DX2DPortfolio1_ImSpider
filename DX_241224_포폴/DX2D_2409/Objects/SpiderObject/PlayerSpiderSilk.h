@@ -31,6 +31,10 @@ public:
 	LineCollider* GetSilkCollider() { return line; }
 
 private:
+	void UpdateShooting(); // 발사 중 로직
+	void ResetSilk();      // 변수 초기화 로직
+
+private:
 	Vector2 shootDir; //거미줄 쏜 방향
 
 	class SpiderPlayer* player;

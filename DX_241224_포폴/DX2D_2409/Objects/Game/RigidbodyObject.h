@@ -19,6 +19,8 @@ public:
 
     void SetVelocityY(float velocityY) { velocity.y = velocityY; }
     void SetVelocityX(float velocityX) { velocity.x = velocityX; }
+    void SetVelocity(Vector2 v) { velocity = v; }
+
     Vector2 GetVelocity() { return velocity; }
 
 protected:

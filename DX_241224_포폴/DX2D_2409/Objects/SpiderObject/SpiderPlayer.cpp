@@ -36,10 +36,24 @@ void SpiderPlayer::Update()
 {
 	SpiderPhysics::Update();
 
+	// ---------------- [추가/수정] ----------------
+	// 1. 상태(State)와 상관없이 W키를 누르면 0.1초 동안 입력 기억 (선입력)
+	if (KEY->Down('W'))
+	{
+		jumpBufferTime = MAX_COYOTE_TIME; // 0.1초(취향에 따라 조절) 동안은 "눌렀다"고 인정해줌
+	}
+
+	// 2. 시간 차감 (버퍼 비우기)
+	if (jumpBufferTime > 0.0f)
+	{
+		jumpBufferTime -= DELTA;
+	}
+	// ---------------------------------------------
+
 	if (curSituation != GOAL_IN)
 	{
-		Move();
 		Jump();
+		Move();
 	
 		WebShoot();
 	}
@@ -82,6 +96,10 @@ void SpiderPlayer::Edit()
 
 void SpiderPlayer::Land() //에디터에서 일반 벽돌 충돌 시 호출함.
 {
+	// [추가] 방금 점프해서 위로 올라가는 중이라면(속도가 양수), 
+	// 발이 땅에 닿아있더라도 착지 판정을 하지 말고 무시해라!
+	if (velocity.y > 0.0f) return;
+
 	if (curState <= MOVE) return;
 
 	if (curSituation == FLY_AWAY) //날아가다 착지한 경우만 (리스폰의 경우는 해당 x)
@@ -250,12 +268,24 @@ void SpiderPlayer::Move()
 void SpiderPlayer::Jump()
 {
 	if (curState >= HANG) return; 
+	if (curState == JUMP || curState == DROP) return; // 이미 공중이면 불가
 
-	if (KEY->Down('W'))
+	/*if (KEY->Down('W'))
 	{
 		Audio::Get()->Play("PlayerJump");
 		SetActionState(JUMP);
+	}*/
+
+	// ---------------- [수정] ----------------
+	// KEY->Down('W') 대신 아까 저장해둔 jumpBufferTime을 확인
+	if (jumpBufferTime > 0.0f)
+	{
+		Audio::Get()->Play("PlayerJump");
+		SetActionState(JUMP); // -> SpiderJump::Start()가 호출됨
+
+		jumpBufferTime = 0.0f; // 점프했으니 버퍼 초기화 (중복 점프 방지)
 	}
+	// ----------------------------------------
 }
 
 void SpiderPlayer::WebShoot()
@@ -286,13 +316,28 @@ void SpiderPlayer::WebCut()
 	{
 		curSituation = FLY_AWAY; //날아가는 상태
 
+		// [추가된 예외처리] 
+		// 땅에 붙어있거나 멈춰있는 상태(속도가 매우 느림)라면, 
+		// 굳이 날아가는 물리 계산을 하지 말고 제자리에 떨어지게 함.
+		if (velocity.Magnitude() < STOP_VELOCITY_THRESHOLD) // 임계값 (테스트하며 조절)
+		{
+			SetVelocity(Vector2(0, 0)); // 속도 0으로 초기화 (점프 방지)
+			// RemainVelocityAfterCut(); // 이 함수는 호출하지 않음!
+		}
+		else
+		{
+			// 스윙 중일 때만 물리 계산 적용
+			RemainVelocityAfterCut();
+		}
+
 		// [버그 해결] 상태가 변하면 RespawnTimer가 돌지 않으므로, 여기서 빨간색 효과를 꺼줘야 함.
 		intValueBuffer->Get()[SWITCH_SLOT] = OFF;
 		respawnedTime = 0; // 타이머도 초기화
+		blinkTime = 0.0f;
 
 		isRigidbodyLimitOn = false; //현재 받은 속도 그대로 날아가도록 임시 처리
 		isSpiderPhysicsOn = false; //스파이더 물리 Off
-		RemainVelocityAfterCut(); //자른 직후 현재 운동하던 방향으로 날아가도록
+		//mainVelocityAfterCut(); //자른 직후 현재 운동하던 방향으로 날아가도록
 
 		CAM->SetTarget(this); //카메라 다시 타겟팅
 		spiderSilk->SetParent(this);

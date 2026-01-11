@@ -87,6 +87,11 @@ private:
 	float respawnedTime = 0;
 	float blinkTime = 0;
 
+	// [보완] 점프 키 입력 기억 시간 - 버퍼 이용해 점프 씹힘 현상 수정
+	float jumpBufferTime = 0.0f;
+	const float MAX_COYOTE_TIME = 0.2f;
+	const float STOP_VELOCITY_THRESHOLD = 10.0f;
+
 	ActionState curState;
 	GameProgressState curSituation;
 	map<ActionState, Action*> spiderActions;
