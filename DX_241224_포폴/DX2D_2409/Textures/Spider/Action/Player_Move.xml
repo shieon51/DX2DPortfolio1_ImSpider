@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TextureAtlas imagePath="Player_Move.png" width="96" height="40">
+    <sprite n="Move (1).png" x="1" y="1" w="46" h="38"/>
+    <sprite n="Move (2).png" x="49" y="1" w="46" h="38"/>
+</TextureAtlas>
