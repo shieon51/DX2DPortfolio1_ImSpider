@@ -183,7 +183,7 @@ void SpiderPlayer::Hang()
 
 	//흔들릴 때는 cam 타겟 잠시 끄기
 	Transform* t = new Transform();
-	t->SetPos(pos + Vector2(200, 0));
+	t->SetPos(pos + Vector2(200, -100));
 	t->UpdateWorld();
 
 	CAM->SetTarget(t);
@@ -285,6 +285,10 @@ void SpiderPlayer::WebCut()
 	if (curState == HANG) //매달린 상태에서 자른 거라면
 	{
 		curSituation = FLY_AWAY; //날아가는 상태
+
+		// [버그 해결] 상태가 변하면 RespawnTimer가 돌지 않으므로, 여기서 빨간색 효과를 꺼줘야 함.
+		intValueBuffer->Get()[SWITCH_SLOT] = OFF;
+		respawnedTime = 0; // 타이머도 초기화
 
 		isRigidbodyLimitOn = false; //현재 받은 속도 그대로 날아가도록 임시 처리
 		isSpiderPhysicsOn = false; //스파이더 물리 Off

@@ -480,19 +480,25 @@ void SpiderGame::PlayerCollision(EditTileObject* editTile)
 
 void SpiderGame::SaveCurStageInfor()
 {
+	int stageNum = 0;
+
 	//이전 스테이지 클리어 정보 불러오기
-	BinaryReader* reader = new BinaryReader("TextData/SpiderGame/CurStage.srt");
+	FILE* fileCheck = nullptr;
+	if (fopen_s(&fileCheck, "TextData/SpiderGame/CurStage.srt", "rb") == 0)
+	{
+		fclose(fileCheck); // 확인했으니 닫고
 
-	int stageNum = reader->Int();
+		// 원래 코드: 읽기
+		BinaryReader* reader = new BinaryReader("TextData/SpiderGame/CurStage.srt");
+		stageNum = reader->Int();
+		delete reader;
+	}
 
-	delete reader;
-
-
-	//해당 스테이지 클리어 하면 즉시 저장
-	BinaryWriter* writer = new BinaryWriter("TextData/SpiderGame/CurStage.srt");
-
-	if (curStage == 0 || curStage == stageNum) //만약 현재 플레이한 스테이지가 최초 클리어인 경우
+	// 만약 현재 플레이한 스테이지가 최초 클리어인 경우
+	if (curStage == 0 || curStage == stageNum)
+	{
+		BinaryWriter* writer = new BinaryWriter("TextData/SpiderGame/CurStage.srt");
 		writer->Int(curStage + 1);
-
-	delete writer;
+		delete writer;
+	}
 }
