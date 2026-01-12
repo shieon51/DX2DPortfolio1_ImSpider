@@ -140,6 +140,7 @@ void TutorialScene::OnClickStartButton()
 
 void TutorialScene::OnClickExitButton()
 {
+	UIManager::Get()->GetUIPanel("GameResult")->SetOn(false);
 	SceneManager::Get()->ChangeScene("Select");
 	Audio::Get()->Stop("Stage0");
 

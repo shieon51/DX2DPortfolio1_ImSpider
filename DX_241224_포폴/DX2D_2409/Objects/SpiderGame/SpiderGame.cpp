@@ -193,6 +193,13 @@ void SpiderGame::EndGame()
 	//플레이어 비활성화, 목숨, 골인여부체크, 설치 타일 가능 개수 원래대로
 	player->SetActive(false);
 	player->PlayerReset();
+
+	// [버그 수정] EndGame 시점에 들리는 모든 거미줄 관련 소리 강제 정지
+	// (PlayerReset 직후에 꺼야 '틱' 하는 소리조차 안 들리게 할 수 있음)
+	Audio::Get()->Stop("SilkCut");    // 방금 WebCut 때문에 난 소리 끄기
+	Audio::Get()->Stop("SilkShoot");  // 쏘는 중이었다면 끄기
+	Audio::Get()->Stop("SilkAttach"); // 붙는 소리 끄기
+
 	UpdateLifeImage(player->GetMaxLife());
 	editedTileNum = 0;
 
@@ -480,7 +487,7 @@ void SpiderGame::PlayerCollision(EditTileObject* editTile)
 
 void SpiderGame::SaveCurStageInfor()
 {
-	int stageNum = 0;
+	int savedMaxStage = 0;
 
 	//이전 스테이지 클리어 정보 불러오기
 	FILE* fileCheck = nullptr;
@@ -490,12 +497,16 @@ void SpiderGame::SaveCurStageInfor()
 
 		// 원래 코드: 읽기
 		BinaryReader* reader = new BinaryReader("TextData/SpiderGame/CurStage.srt");
-		stageNum = reader->Int();
+		savedMaxStage = reader->Int();
 		delete reader;
 	}
 
+	// "현재 깬 스테이지의 다음 단계"가 "저장된 기록"보다 클 때만 저장
+	// (예: 기록은 4인데 1을 깼다면, 2는 4보다 작으므로 저장 안 함 -> 기록 유지)
+	int nextOpenStage = curStage + 1;
+
 	// 만약 현재 플레이한 스테이지가 최초 클리어인 경우
-	if (curStage == 0 || curStage == stageNum)
+	if (nextOpenStage > savedMaxStage)
 	{
 		BinaryWriter* writer = new BinaryWriter("TextData/SpiderGame/CurStage.srt");
 		writer->Int(curStage + 1);

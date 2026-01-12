@@ -158,6 +158,11 @@ void SpiderPlayer::PlayerReset()
 {
 	//목숨, 골인상태 등 초기화 
 	WebCut(); //거미줄 부착 상태였다면 자르기
+
+	// [수정 1] 물리 속도 완벽 초기화
+	// WebCut에 의해 남은 관성이나 기존 속도를 0으로 만들어야 다음 시작 때 안 튀어나감
+	velocity = Vector2(0, 0);
+
 	UpdateWorld();
 
 	life = MAX_LIFE;
@@ -177,6 +182,10 @@ void SpiderPlayer::GameOver()
 	((GameResultUI*)(UIManager::Get()->GetUIPanel("GameResult")))
 		->PrintGameOver();
 	UIManager::Get()->GetUIPanel("GameResult")->SetOn(true);
+
+	// [추가] 켜진 직후, 화면에 그려지기 전에 강제로 위치 계산 1회 수행
+	// (이게 없으면 1프레임 동안 (0,0)에 가 있다가 옴)
+	((GameResultUI*)UIManager::Get()->GetUIPanel("GameResult"))->Update();
 }
 
 void SpiderPlayer::GameClear()
@@ -191,6 +200,9 @@ void SpiderPlayer::GameClear()
 	((GameResultUI*)(UIManager::Get()->GetUIPanel("GameResult")))
 		->PrintGameClear();
 	UIManager::Get()->GetUIPanel("GameResult")->SetOn(true);
+
+	// [추가] 여기서도 강제 업데이트 추가
+	((GameResultUI*)UIManager::Get()->GetUIPanel("GameResult"))->Update();
 
 	contextStage->SaveCurStageInfor();
 }

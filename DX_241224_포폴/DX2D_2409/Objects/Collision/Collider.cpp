@@ -12,7 +12,7 @@ Collider::~Collider()
 
 void Collider::Render()
 {
-    GameObject::Render(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+    //GameObject::Render(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 }
 
 bool Collider::IsCollision(Collider* collider, Vector2* overlap)

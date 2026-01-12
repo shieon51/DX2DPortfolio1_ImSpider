@@ -16,6 +16,8 @@ public:
 
 private:
 	vector<Button*> buttons;
+	Quad* imageWin;
+	Quad* imageLose;
 
 	bool isGameClear = true;
 };

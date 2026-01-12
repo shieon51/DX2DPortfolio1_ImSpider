@@ -93,6 +93,8 @@ void StageScene::OnClickStartButton()
 
 void StageScene::OnClickExitButton() //게임 도중 나가기 버튼
 {
+	UIManager::Get()->GetUIPanel("GameResult")->SetOn(false);
+
 	string stageNumStr = to_string(stageNum);
 
 	SceneManager::Get()->ChangeScene("Select");

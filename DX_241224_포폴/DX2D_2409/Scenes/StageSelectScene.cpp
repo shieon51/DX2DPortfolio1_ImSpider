@@ -100,11 +100,32 @@ void StageSelectScene::Start()
 	LoadCurStageInfor();
 
 	Vector2 offset = Vector2(0, -150);
-	curStage->SetPos(stageButtons[curStageNum]->GetPos() + offset);
+
+	// 모든 스테이지를 다 깼을 경우(curStageNum == 4) 예외 처리
+	int targetIndex = curStageNum;
+	// 만약 4(Hard 클리어)라면, 버튼은 3번(Hard)까지만 있으므로 3번에 고정하거나
+	// 혹은 'All Clear' 이미지를 따로 띄워야 함. 일단 3번(Hard) 위치에 고정.
+	if (targetIndex >= 4)
+	{
+		targetIndex = 3;
+		// 여기에 "All Clear!" 텍스트 같은 걸 띄우는 코드를 추가해도 좋음
+	}
+
+	curStage->SetPos(stageButtons[targetIndex]->GetPos() + offset);
 	curStage->UpdateWorld();
 
-	for (int i = 0; i <= curStageNum; i++)
-		stageButtons[i]->SetActive(true);
+	// 잠금 해제 로직: curStageNum만큼 버튼 활성화
+	// (curStageNum이 4면 0,1,2,3 다 켜짐 -> 정상)
+	for (int i = 0; i < 4; i++)
+	{
+		if (i <= curStageNum)
+			stageButtons[i]->SetActive(true);
+		else
+			stageButtons[i]->SetActive(false); // 안 깬 건 확실히 끄기
+	}
+
+	/*for (int i = 0; i <= curStageNum; i++)
+		stageButtons[i]->SetActive(true);*/
 }
 
 void StageSelectScene::OnClickStageButton(int stageNum)
