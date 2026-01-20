@@ -29,5 +29,5 @@ protected:
 
 	Vector2 attachPos; //부착한 위치
 	Vector2 firstPos; //부착시 초기 플레이어 위치(최고점)
-	float firstSilkLength; // ** 부착 당시 최초 거미줄 길이 
+	float firstSilkLength; // 부착 당시 최초 거미줄 길이 
 };

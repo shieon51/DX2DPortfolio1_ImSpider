@@ -20,7 +20,6 @@ public:
 
     void SetTarget(Transform* target) { this->target = target; }
 
-    //
     void OffCameraLimitRange(); 
     void SetCameraLimitRange(float XMin, float XMax, float YMin, float YMax);
     void CameraOff();
@@ -29,8 +28,6 @@ public:
     Vector2 ScreenToWorld(const Vector2& screenPos);
     Vector2 WorldToScreen(const Vector2& worldPos);
 
-
-    //bool IsContain(Vector2 pos);
 private:
     void Init();
 

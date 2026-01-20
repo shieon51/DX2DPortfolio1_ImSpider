@@ -102,10 +102,6 @@ void TutorialScene::PostRender()
 {
 	game->Edit();
 
-	//--
-	//for (Quad* image : tutorialImages)
-	//	image->Edit();
-
 	if (game->GetIsEditing()) //아직 에디팅 중이면
 	{
 		tutorialUI->PanelVisiable();

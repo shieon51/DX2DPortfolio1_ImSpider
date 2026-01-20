@@ -12,7 +12,6 @@ public:
 	void PrintGameOver();
 
 	void OnClickButton();
-	//void SetIsGameClear(bool result) { isGameClear = result; }
 
 private:
 	vector<Button*> buttons;

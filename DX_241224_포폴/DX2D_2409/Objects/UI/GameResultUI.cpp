@@ -25,8 +25,6 @@ GameResultUI::GameResultUI()
 	buttons.back()->SetText("돌아가기");
 	buttons.back()->UpdateWorld();
 
-	//++ 다음 스테이지로 버튼
-
 }
 
 GameResultUI::~GameResultUI()
@@ -100,6 +98,4 @@ void GameResultUI::OnClickButton()
 	Audio::Get()->Stop("Stage3");
 
 	Audio::Get()->Play("BGM", 0.3f);
-
-	//+ 줄끊는 소리 안나게
 }

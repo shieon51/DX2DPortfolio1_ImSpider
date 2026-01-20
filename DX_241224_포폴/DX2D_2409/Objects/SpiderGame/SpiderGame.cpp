@@ -195,8 +195,7 @@ void SpiderGame::EndGame()
 	player->PlayerReset();
 
 	// [버그 수정] EndGame 시점에 들리는 모든 거미줄 관련 소리 강제 정지
-	// (PlayerReset 직후에 꺼야 '틱' 하는 소리조차 안 들리게 할 수 있음)
-	Audio::Get()->Stop("SilkCut");    // 방금 WebCut 때문에 난 소리 끄기
+	Audio::Get()->Stop("SilkCut");    // WebCut 소리 끄기
 	Audio::Get()->Stop("SilkShoot");  // 쏘는 중이었다면 끄기
 	Audio::Get()->Stop("SilkAttach"); // 붙는 소리 끄기
 
@@ -213,7 +212,7 @@ void SpiderGame::EndGame()
 	//적 삭제
 	EnemyManager::Get()->ClearEnemys();
 
-	//(두번째 실행부터는 파일 로드 필요 없음)
+	//두번째 실행부터는 파일 로드 필요 없음
 	isInit = false;
 }
 
@@ -501,7 +500,7 @@ void SpiderGame::SaveCurStageInfor()
 		delete reader;
 	}
 
-	// "현재 깬 스테이지의 다음 단계"가 "저장된 기록"보다 클 때만 저장
+	// 현재 깬 스테이지의 다음 단계가 저장된 기록보다 클 때만 저장
 	// (예: 기록은 4인데 1을 깼다면, 2는 4보다 작으므로 저장 안 함 -> 기록 유지)
 	int nextOpenStage = curStage + 1;
 

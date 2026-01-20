@@ -42,8 +42,7 @@ void BasicTile::CollisionCheck()
 
 				if (player->IsHanging()) //매달린 상태일 경우
 				{
-					player->SetVelocityX(0.0f); //임시코드
-					//player->SetPendulumCondition()
+					player->SetVelocityX(0.0f); 
 				}
 				else
 				{

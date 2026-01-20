@@ -48,7 +48,6 @@ public:
 	//EditTile에서 호출
 	void Hang();
 	bool IsHanging() { return curState == HANG; } 
-	//void SetHangingPlayerPos(Vector2 updatePos); //줄길이 변화 있을 때 플레이어 pos 재설정
 
 	//ObstacleTile에서 호출 //EnemyManager, 장애물타일 에서 호출
 	void Respawn();
@@ -87,7 +86,7 @@ private:
 	float respawnedTime = 0;
 	float blinkTime = 0;
 
-	// [보완] 점프 키 입력 기억 시간 - 버퍼 이용해 점프 씹힘 현상 수정
+	// 점프 키 입력 기억 시간 - 버퍼 이용해 점프 씹힘 현상 수정
 	float jumpBufferTime = 0.0f;
 	const float MAX_COYOTE_TIME = 0.2f;
 	const float STOP_VELOCITY_THRESHOLD = 10.0f;

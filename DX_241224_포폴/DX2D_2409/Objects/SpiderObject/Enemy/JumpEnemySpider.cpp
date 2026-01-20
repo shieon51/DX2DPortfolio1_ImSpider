@@ -28,8 +28,6 @@ void JumpEnemySpider::DoActing()
 {
 	if (isLand) //바닥에 닿으면 다시 점프
 	{
-		//++나중에 점프 텀 줄 수 있으면 주기
-
 		SetVelocityY(ENEMY_JUMP_POWER * jumpMultiplier);
 		curState = JUMP;
 		isLand = false;

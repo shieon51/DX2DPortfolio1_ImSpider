@@ -19,7 +19,6 @@ public:
 
 	//player에서 호출
 	void SilkShoot(Vector2 playerPos);
-	void AdjustSilkLength(bool isUp);
 	void Cut();
 	Vector2 GetAttachPos() { return attachPos; }
 	Vector2 GetFirstPlayerPos() { return firstPos; }
