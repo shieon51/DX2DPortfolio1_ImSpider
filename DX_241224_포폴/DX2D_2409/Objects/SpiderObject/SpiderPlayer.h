@@ -33,7 +33,7 @@ public:
 
 	void Land();
 	void Drop();
-	void Floating(); //jump, drop 상태에서만 사용
+	void Floating(); // jump, drop 상태에서만 사용
 	void RespawnTimer();
 
 	//SpiderGame에서 호출 (목숨 UI, 게임 리셋 등)
@@ -70,13 +70,11 @@ private:
 	void Jump();
 	void WebShoot(); //거미줄 발사
 	void WebCutCheck(); //거미줄 자르는 버튼을 눌렀는지 체크
-	void AdjustWebLength();
 	void DemageEffect(float curTime);
 
 	void SetActionState(ActionState state);
 
 	void CreateActions();
-	//++상태에 따라 콜라이더 크기도 변해야 함
 
 private:
 	class SpiderGame* contextStage;

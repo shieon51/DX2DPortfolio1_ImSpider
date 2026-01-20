@@ -59,7 +59,6 @@ void SpiderPlayer::Update()
 	}
 
 	WebCutCheck();
-	AdjustWebLength();
 
 	Floating(); //중력 작용
 	RespawnTimer(); //리스폰 된 직후 깜빡임 처리
@@ -334,12 +333,6 @@ void SpiderPlayer::WebCut()
 		if (velocity.Magnitude() < STOP_VELOCITY_THRESHOLD) // 임계값 (테스트하며 조절)
 		{
 			SetVelocity(Vector2(0, 0)); // 속도 0으로 초기화 (점프 방지)
-			// RemainVelocityAfterCut(); // 이 함수는 호출하지 않음!
-		}
-		else
-		{
-			// 스윙 중일 때만 물리 계산 적용
-			RemainVelocityAfterCut();
 		}
 
 		// [버그 해결] 상태가 변하면 RespawnTimer가 돌지 않으므로, 여기서 빨간색 효과를 꺼줘야 함.
@@ -349,7 +342,6 @@ void SpiderPlayer::WebCut()
 
 		isRigidbodyLimitOn = false; //현재 받은 속도 그대로 날아가도록 임시 처리
 		isSpiderPhysicsOn = false; //스파이더 물리 Off
-		//mainVelocityAfterCut(); //자른 직후 현재 운동하던 방향으로 날아가도록
 
 		CAM->SetTarget(this); //카메라 다시 타겟팅
 		spiderSilk->SetParent(this);
@@ -364,32 +356,9 @@ void SpiderPlayer::WebCut()
 	}
 }
 
-void SpiderPlayer::AdjustWebLength() //줄길이 조절
-{
-	if (curState != HANG) return;
-
-	// ++예외처리 보류
-
-	//if (KEY->Press('W'))
-	//{
-	//	spiderSilk->AdjustSilkLength(true); //줄 조절
-	//	SetPendulumCondition(spiderSilk->GetFirstPlayerPos(), spiderSilk->GetAttachPos());
-	//	UpdateVelocityX();
-	//	//줄 길이가 달라지면 퍼텐셜 에너지 다시 계산해야 함
-	//
-	//}
-	//else if (KEY->Press('S'))
-	//{
-	//	spiderSilk->AdjustSilkLength(false); //줄 조절
-	//	SetPendulumCondition(spiderSilk->GetFirstPlayerPos(), spiderSilk->GetAttachPos());
-	//	UpdateVelocityX();
-	//	//줄 길이가 달라지면 퍼텐셜 에너지 다시 계산해야 함
-	//}
-}
-
 void SpiderPlayer::DemageEffect(float curTime)
 {
-	//빨간색 점멸 (0.2초 간격)
+	// 빨간색 점멸 (0.2초 간격)
 	blinkTime += DELTA;
 
 	if (blinkTime >= BLINK_TIME)
@@ -420,16 +389,16 @@ void SpiderPlayer::CreateActions()
 	spiderActions[HANG] = new Action("Textures/Spider/Action/", "Player_Hang.xml", true);
 	spiderActions[DROP] = new SpiderDrop(this);
 
-	//셰이더 지정
+	// 셰이더 지정
 	for (pair<ActionState, Action*> action : spiderActions)
 	{
 		action.second->SetShader(L"Shaders/Player.hlsl");
 	}
 
-	//ValueBuffer 초기화
+	// ValueBuffer 초기화
 	intValueBuffer = new IntValueBuffer();
-	intValueBuffer->Get()[SWITCH_SLOT] = OFF; //스위치
+	intValueBuffer->Get()[SWITCH_SLOT] = OFF; // 스위치
 	
 	colorValueBuffer = new ColorValueBuffer();
-	colorValueBuffer->Get() = Float4( 0.7f, 0, 0, 0 ); //오버레이 값: 빨간색
+	colorValueBuffer->Get() = Float4( 0.7f, 0, 0, 0 ); // 오버레이 값: 빨간색
 }
