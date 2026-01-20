@@ -126,7 +126,7 @@ void PlayerSpiderSilk::AttachSilk(Vector2 contectPoint, Vector2 playerPos)
 	SetParent(nullptr); //부모(거미) 해제
 	pos = attachPos;
 
-	// [추가] 중요! 매달리기 상태의 각도로 즉시 갱신해줘야 함.
+	// [추가] 매달리기 상태의 각도로 즉시 갱신해줘야 함.
 	// (이게 없으면 쏘던 각도 그대로 유지돼서 줄이 엉뚱한 곳을 가리킴)
 	Vector2 dir = attachPos - playerPos;
 	SetRot(0, 0, dir.Angle());
@@ -148,7 +148,7 @@ void PlayerSpiderSilk::UpdateShooting()
 	// 1. 발사 (나가는 중)
 	if (!isMaxLength)
 	{
-		// 길이만 늘립니다 (오른쪽으로 쭉 뻗음)
+		// 길이만 늘리기 (오른쪽으로 쭉 뻗음)
 		size.x += SHOOT_SPEED * DELTA;
 		UpdateSilk();
 
@@ -162,11 +162,11 @@ void PlayerSpiderSilk::UpdateShooting()
 	// 2. 복귀 (돌아오는 중)
 	else
 	{
-		// 길이만 줄입니다 (오른쪽 끝에서부터 줄어듦)
+		// 길이만 줄이기 (오른쪽 끝에서부터 줄어듦)
 		size.x -= SHOOT_SPEED * DELTA;
 		UpdateSilk();
 
-		// 길이가 0이 되면 (내 몸에 다 돌아오면) 끝!
+		// 길이가 0이 되면 (내 몸에 다 돌아오면) 끝
 		if (size.x <= 0)
 		{
 			size.x = 0;

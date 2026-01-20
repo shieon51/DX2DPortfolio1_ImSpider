@@ -219,8 +219,8 @@ void SpiderPlayer::Hang()
 	CAM->SetTarget(t);
 	SetActionState(HANG); 
 	isSpiderPhysicsOn = true; //스파이더 물리 On
-	SetPendulumCondition(spiderSilk->GetFirstPlayerPos(), spiderSilk->GetAttachPos());
-	SavePrePontentialEnergy();
+	SetPendulumCondition(spiderSilk->GetFirstPlayerPos(), spiderSilk->GetAttachPos()); // 초기 부착/플레이어 pos 넘기기
+	//SavePrePontentialEnergy();
 	//CheckLeftOrRightDir(); //초기에만 설정
 
 	SetVelocityX(0.0f); //임시코드
