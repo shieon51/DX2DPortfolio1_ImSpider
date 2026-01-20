@@ -25,5 +25,6 @@ IM Spider는 **타일 설치와 로프 이동을 중심으로 한 퍼즐 액션 
 ---
 
 ## Controls
-- 이동: WASD
-- 로프 / 액션: Mouse / Keyboard
+- 이동: A, D
+- 점프: W
+- 거미줄 쏘기/끊기: Mouse 우클릭
