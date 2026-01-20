@@ -12,12 +12,12 @@ SpiderGame::SpiderGame(int loadStageNum)
 	player->SetContextStage(this);
 	player->SetActive(false);
 
-	//에디팅 시 현재 마우스가 가리키고 있는 벽돌 표시(반투명 벽돌)
+	// 에디팅 시 현재 마우스가 가리키고 있는 벽돌 표시(반투명 벽돌)
 	curserPointTile = new Quad(L"Textures/Spider/Tile/tile2.png");
 	curserPointTile->GetMaterial()->SetColor(1, 1, 1, 0.4f);
 	curserPointTile->SetPos(-1, -1);
 
-	//목숨 표시
+	// 목숨 표시
 	lifeImage = new Slider(L"Textures/Spider/UI/Life.png", L"Textures/Spider/UI/Life_Back.png");
 	lifeImage->SetPos(100, SCREEN_HEIGHT - 50);
 	lifeImage->UpdateWorld();
@@ -83,7 +83,7 @@ void SpiderGame::Render()
 	for (EditTileObject* editTile : editTileObjects)
 		editTile->Render();
 
-	if (!isEditing) //게임 중일때만 플레이어 render
+	if (!isEditing) // 게임 중일때만 플레이어 render
 	{
 		EnemyManager::Get()->Render();
 		player->Render();
@@ -123,36 +123,36 @@ void SpiderGame::Edit()
 
 void SpiderGame::StartGame()
 {
-	//빈 공간 콜라이더는 끄기 (타입 1)
-	//isEditing false로 변경
-	//타입 0 중 에디팅 된 애만 콜라이더 남기기 (GetIsEdited() 이용)
-	//적, 플레이어 위치 타일도 콜라이더 끄기
-	//EnemyManager로 적 미리 생성, 플레이어 미리 생성한 후 active만 키기
+	// 빈 공간 콜라이더는 끄기 (타입 1)
+	// isEditing false로 변경
+	// 타입 0 중 에디팅 된 애만 콜라이더 남기기 (GetIsEdited() 이용)
+	// 적, 플레이어 위치 타일도 콜라이더 끄기
+	// EnemyManager로 적 미리 생성, 플레이어 미리 생성한 후 active만 키기
 
 	for (EditTileObject* editTile : editTileObjects)
 	{
-		if (editTile->GetTileType() == NO_EDIT) //에디팅 불가 지역
+		if (editTile->GetTileType() == NO_EDIT) // 에디팅 불가 지역
 		{
-			editTile->GetInstanceData()->curFrame = { 0, 0 }; //빈 타일로 바꿔준 후
+			editTile->GetInstanceData()->curFrame = { 0, 0 }; // 빈 타일로 바꿔준 후
 			UpdateInstanceData();
 			editTile->SetActive(false);
 		}
-		else if (editTile->GetTileType() == CAN_EDIT && !editTile->GetIsEdited()) //에디팅 가능 지역이나 에디팅 안한 경우
+		else if (editTile->GetTileType() == CAN_EDIT && !editTile->GetIsEdited()) // 에디팅 가능 지역이나 에디팅 안한 경우
 		{
 			editTile->SetActive(false);
 		}
-		else if (editTile->GetTileType() == CAN_EDIT && editTile->GetIsEdited()) //에디팅 가능 지역 & 에디팅 됨
+		else if (editTile->GetTileType() == CAN_EDIT && editTile->GetIsEdited()) // 에디팅 가능 지역 & 에디팅 됨
 		{
-			editTile->SetTileType(RAGULAR); //에디팅 된 타일 ->일반타일 뿐임
+			editTile->SetTileType(RAGULAR); // 에디팅 된 타일 ->일반타일 뿐임
 		}
-		else if (editTile->GetTileType() == PLAYER) //플레이어 타일
+		else if (editTile->GetTileType() == PLAYER) // 플레이어 타일
 		{
 			editTile->GetInstanceData()->curFrame = { 0, 0 }; 
 			UpdateInstanceData();
 			editTile->SetActive(false);
-			player->SetActive(true); //플레이어 켜주기
+			player->SetActive(true); // 플레이어 켜주기
 		}
-		else if (editTile->GetTileType() / 1000 == DeadObjectType::ENEMY) //적 타일
+		else if (editTile->GetTileType() / 1000 == DeadObjectType::ENEMY) // 적 타일
 		{
 			editTile->GetInstanceData()->curFrame = { 0, 0 };
 			UpdateInstanceData();
@@ -161,7 +161,7 @@ void SpiderGame::StartGame()
 		else if (editTile->GetTileType() == UP_THORN)
 		{
 			Vector2 tileSize = editTile->Size() * Vector2(1, 0.5f);
-			Vector2 offset = { 0, -tileSize.x * 0.25f}; //콜라이더 크기 변경해주기
+			Vector2 offset = { 0, -tileSize.x * 0.25f}; // 콜라이더 크기 변경해주기
 			editTile->Translate(offset);
 			editTile->UpdateWorld();
 			editTile->UpdateSize(tileSize);
@@ -169,7 +169,7 @@ void SpiderGame::StartGame()
 		else if (editTile->GetTileType() == DOWN_THORN)
 		{
 			Vector2 tileSize = editTile->Size() * Vector2(1, 0.5f);
-			Vector2 offset = { 0, +tileSize.x * 0.25f }; //콜라이더 크기 변경해주기
+			Vector2 offset = { 0, +tileSize.x * 0.25f }; // 콜라이더 크기 변경해주기
 			editTile->Translate(offset);
 			editTile->UpdateWorld();
 			editTile->UpdateSize(tileSize);
@@ -187,10 +187,10 @@ void SpiderGame::StartGame()
 
 void SpiderGame::EndGame()
 {
-	//적 비활성화
+	// 적 비활성화
 	EnemyManager::Get()->TurnOffEnemyActivity();
 
-	//플레이어 비활성화, 목숨, 골인여부체크, 설치 타일 가능 개수 원래대로
+	// 플레이어 비활성화, 목숨, 골인여부체크, 설치 타일 가능 개수 원래대로
 	player->SetActive(false);
 	player->PlayerReset();
 
@@ -202,17 +202,17 @@ void SpiderGame::EndGame()
 	UpdateLifeImage(player->GetMaxLife());
 	editedTileNum = 0;
 
-	//에디팅 모드로 전환
+	// 에디팅 모드로 전환
 	isEditing = true;
 
-	//카메라 기능 끄기
+	// 카메라 기능 끄기
 	CAM->SetTarget(nullptr);
 	CAM->CameraOff();
 
-	//적 삭제
+	// 적 삭제
 	EnemyManager::Get()->ClearEnemys();
 
-	//두번째 실행부터는 파일 로드 필요 없음
+	// 두번째 실행부터는 파일 로드 필요 없음
 	isInit = false;
 }
 
@@ -304,13 +304,13 @@ void SpiderGame::CreateTiles()
 
 	Vector2 tileSize = quad->GetSize();
 
-	//나중에 엑셀 로드 과정에서 조절되도록 (최대 가로 26, 세로 10)
+	// 나중에 엑셀 로드 과정에서 조절되도록 (최대 가로 26, 세로 10)
 	UINT size = width * height;
 
 	instances.resize(size);
 	editTileObjects.reserve(size);
 
-	//타일 사이즈 저장 (맵 전체 구역 파악을 위함)
+	// 타일 사이즈 저장 (맵 전체 구역 파악을 위함)
 	this->tileSize = tileSize;
 	EnemyManager::Get()->SetTileSize(tileSize);
 

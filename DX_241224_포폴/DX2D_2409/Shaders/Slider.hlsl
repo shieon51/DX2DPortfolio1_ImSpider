@@ -54,8 +54,8 @@ SamplerState samp : register(s0);
 
 float4 PS(PixelInput input) : SV_TARGET
 {	
-	float4 frontColor = frontMap.Sample(samp, input.uv); //앞이미지
-	float4 backColor = backMap.Sample(samp, input.uv); //뒷이미지
+	float4 frontColor = frontMap.Sample(samp, input.uv); // 앞 이미지
+	float4 backColor = backMap.Sample(samp, input.uv); // 뒷 이미지
 		
 	float4 baseColor = frontColor;
 	

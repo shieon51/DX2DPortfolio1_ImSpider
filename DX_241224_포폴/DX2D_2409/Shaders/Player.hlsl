@@ -80,7 +80,7 @@ float4 PS(PixelInput input) : SV_TARGET
 		baseColor.b == removeColor.b)
         baseColor.a = 0.0f;
 	
-    if (isSwitchOn == 1) //오버레이 기능 켜지면 (피격 시)
+    if (isSwitchOn == 1) // 오버레이 기능 켜지면 (피격 시)
         baseColor = Grayscale2(baseColor) + overlayColor;
 	
     return baseColor * tintColor;
