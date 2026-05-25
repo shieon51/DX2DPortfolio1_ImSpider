@@ -11,6 +11,8 @@ IM Spider는 **타일 설치와 로프 이동을 중심으로 한 퍼즐 액션 
 * **Period:** 2024.12.09 ~ 2024.12.23 (총 15일)
 * **Role:** 1인 개발 (기획, 2~4 스테이지 배경을 제외한 모든 아트, 개발)
 
+### 프로젝트 시연 영상
+[![프로젝트 시연 영상](https://img.youtube.com/vi/gVfd2UThpIs/0.jpg)](https://www.youtube.com/watch?v=gVfd2UThpIs)
 ---
 
 ## Key Features
@@ -23,7 +25,7 @@ IM Spider는 **타일 설치와 로프 이동을 중심으로 한 퍼즐 액션 
 
 ## Technology Stack
 * **Language:** C++
-* **Graphics API:** DirectX 11 (or 12)
+* **Graphics API:** DirectX 11
 * **Engine:** Custom Game Engine (Built from scratch)
 
 ---
