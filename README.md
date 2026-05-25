@@ -7,6 +7,9 @@ IM Spider는 **타일 설치와 로프 이동을 중심으로 한 퍼즐 액션 
 퍼즐 설계와 이동 메커니즘의 결합을 핵심 재미 요소로 두고 있으며,  
 단순한 조작 속에서 경로 선택과 판단을 요구하도록 구성했습니다.
 
+### Project Overview
+* **Period:** 2024.12.09 ~ 2026.XX
+* **Role:** 1인 개발 (기획, 2~4 스테이지 배경을 제외한 모든 아트, 개발)
 
 ---
 
@@ -19,9 +22,9 @@ IM Spider는 **타일 설치와 로프 이동을 중심으로 한 퍼즐 액션 
 ---
 
 ## Technology Stack
-- **C++**
-- **DirectX**
-- Custom Game Engine
+* **Language:** C++
+* **Graphics API:** DirectX 11 (or 12)
+* **Engine:** Custom Game Engine (Built from scratch)
 
 ---
 
